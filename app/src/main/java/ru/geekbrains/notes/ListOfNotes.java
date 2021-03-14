@@ -2,17 +2,18 @@ package ru.geekbrains.notes;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListOfNotes#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.LinkedList;
+
 public class ListOfNotes extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -60,5 +61,35 @@ public class ListOfNotes extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list_of_notes, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initListOfNotes(view);
+    }
+
+    private void initListOfNotes(View view) {
+        LinearLayout layoutView = (LinearLayout) view;
+        Notes notes = new Notes();
+        notes.addNote("First note", "First note description",
+                "First note large text");
+        notes.addNote("Second note", "Second note description",
+                "Second note large text");
+        notes.addNote("Third note", "Third note description",
+                "Third note large text");
+        notes.addNote("Fourth note", "Fourth note description",
+                "Fourth note large text");
+
+        LinkedList<LinkedList<String>> allNotes = notes.getAllNotes();
+
+        for (int i = 0; i < allNotes.size(); i++) {
+            String noteName = allNotes.get(i).get(1);
+            TextView tv = new TextView(getContext());
+            tv.setText(noteName);
+            tv.setTextSize(30);
+            layoutView.addView(tv);
+        }
+
     }
 }
