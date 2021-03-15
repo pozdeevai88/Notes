@@ -1,7 +1,6 @@
 package ru.geekbrains.notes;
 
 import android.annotation.SuppressLint;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;

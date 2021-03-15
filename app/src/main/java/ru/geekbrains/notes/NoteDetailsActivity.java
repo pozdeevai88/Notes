@@ -1,9 +1,9 @@
 package ru.geekbrains.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
+import java.util.ArrayList;
 
 public class NoteDetailsActivity extends AppCompatActivity {
 
@@ -15,16 +15,13 @@ public class NoteDetailsActivity extends AppCompatActivity {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             finish();
             return;
-
         }
 
         if (savedInstanceState == null) {
-            NoteDetails details = new NoteDetails();
-            details.setArguments(getIntent().getExtras());
+            ArrayList<String> details  = getIntent().getStringArrayListExtra("note");
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_note_details, details)
-                    .commit();
+                    .replace(R.id.fragment_note_details, NoteDetails.newInstance(details)).commit();
         }
 
     }
