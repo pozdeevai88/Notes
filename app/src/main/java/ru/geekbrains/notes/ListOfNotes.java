@@ -1,20 +1,27 @@
 package ru.geekbrains.notes;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ListOfNotes extends Fragment {
 
+    private boolean isLandscape;
 
     public ListOfNotes() {
         // Required empty public constructor
@@ -69,7 +76,30 @@ public class ListOfNotes extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
     private void showNoteDetails(LinkedList<String> strings) {
+        if (isLandscape) {
+            showLandNoteDetails(strings);
+        } else {
+            showPortNoteDetails(strings);
+        }
+    }
+
+    private void showLandNoteDetails(LinkedList<String> strings) {
+        NoteDetails details = NoteDetails.newInstance(new ArrayList<>(strings));
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_note_details, details);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
+    }
+
+    private void showPortNoteDetails(LinkedList<String> strings) {
         Intent showNoteDetails = new Intent();
         showNoteDetails.setClass(getActivity(), NoteDetailsActivity.class);
         showNoteDetails.putExtra(NoteDetails.ARG_PARAM1, strings);
