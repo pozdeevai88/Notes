@@ -1,25 +1,18 @@
 package ru.geekbrains.notes;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Objects;
 
 public class ListOfNotes extends Fragment {
 
@@ -28,13 +21,6 @@ public class ListOfNotes extends Fragment {
 
     public ListOfNotes() {
         // Required empty public constructor
-    }
-
-    public static ListOfNotes newInstance() {
-        ListOfNotes fragment = new ListOfNotes();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -98,29 +84,14 @@ public class ListOfNotes extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.detail_fragment_container, new NoteDetails(note));
         fragmentTransaction.commit();
-//        NoteDetails details = NoteDetails.newInstance(new ArrayList<>(note));
-//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_note_details, details);
-//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//        fragmentTransaction.commit();
     }
 
     private void showPortNoteDetails(LinkedList<String> note) {
-//        FragmentManager fragmentManager = getParentFragmentManager();
-//        fragmentManager.popBackStack();
-        addFragment(new NoteDetails(note));
-//        Intent showNoteDetails = new Intent();
-//        showNoteDetails.setClass(getActivity(), NoteDetailsActivity.class);
-//        showNoteDetails.putExtra(NoteDetails.ARG_PARAM1, note);
-//        startActivity(showNoteDetails);
-    }
-
-    private void addFragment(Fragment fragment) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, fragment);
+        fragmentTransaction.add(R.id.fragment_container, new NoteDetails(note));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
     }
 }

@@ -4,12 +4,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
-import android.widget.FrameLayout;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,7 +21,6 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivityNavMenu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private boolean isLandscape;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +48,12 @@ public class MainActivityNavMenu extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         if (isLandscape) {
             addLandFragment(new ListOfNotes(), new NoteDetails());
         } else {
             addPortFragment(new ListOfNotes());
         }
-
-
     }
 
     private void addPortFragment(Fragment listOfNotes) {
@@ -79,7 +73,6 @@ public class MainActivityNavMenu extends AppCompatActivity {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
-
     }
 
     private void removeLastFragment() {
@@ -101,16 +94,4 @@ public class MainActivityNavMenu extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        int count = getSupportFragmentManager().getBackStackEntryCount();
-//        if (count == 0) {
-//            super.onBackPressed();
-//
-//        } else {
-//            getSupportFragmentManager().popBackStack();
-//        }
-//
-//    }
 }
