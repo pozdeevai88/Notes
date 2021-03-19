@@ -12,17 +12,17 @@ public class NoteDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_details);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            finish();
-            return;
-        }
-
-        if (savedInstanceState == null) {
-            ArrayList<String> details  = getIntent().getStringArrayListExtra("note");
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_note_details, NoteDetails.newInstance(details)).commit();
-        }
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            finish();
+//            return;
+//        }
+//
+//        if (savedInstanceState == null) {
+//            ArrayList<String> details  = getIntent().getStringArrayListExtra("note");
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_note_details, NoteDetails.newInstance(details)).commit();
+//        }
 
     }
 }

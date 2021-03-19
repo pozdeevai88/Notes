@@ -19,12 +19,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class ListOfNotes extends Fragment {
 
-    private boolean isLandscape;
-    //    private static boolean isNotesInit = false;
     private static final Notes NOTES = new Notes();
+    private boolean isLandscape;
 
     public ListOfNotes() {
         // Required empty public constructor
@@ -43,8 +43,7 @@ public class ListOfNotes extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_list_of_notes, container, false);
     }
 
@@ -86,27 +85,42 @@ public class ListOfNotes extends Fragment {
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    private void showNoteDetails(LinkedList<String> strings) {
+    private void showNoteDetails(LinkedList<String> note) {
         if (isLandscape) {
-            showLandNoteDetails(strings);
+            showLandNoteDetails(note);
         } else {
-            showPortNoteDetails(strings);
+            showPortNoteDetails(note);
         }
     }
 
-    private void showLandNoteDetails(LinkedList<String> strings) {
-        NoteDetails details = NoteDetails.newInstance(new ArrayList<>(strings));
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+    private void showLandNoteDetails(LinkedList<String> note) {
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_note_details, details);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.replace(R.id.detail_fragment_container, new NoteDetails(note));
         fragmentTransaction.commit();
+//        NoteDetails details = NoteDetails.newInstance(new ArrayList<>(note));
+//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_note_details, details);
+//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        fragmentTransaction.commit();
     }
 
-    private void showPortNoteDetails(LinkedList<String> strings) {
-        Intent showNoteDetails = new Intent();
-        showNoteDetails.setClass(getActivity(), NoteDetailsActivity.class);
-        showNoteDetails.putExtra(NoteDetails.ARG_PARAM1, strings);
-        startActivity(showNoteDetails);
+    private void showPortNoteDetails(LinkedList<String> note) {
+//        FragmentManager fragmentManager = getParentFragmentManager();
+//        fragmentManager.popBackStack();
+        addFragment(new NoteDetails(note));
+//        Intent showNoteDetails = new Intent();
+//        showNoteDetails.setClass(getActivity(), NoteDetailsActivity.class);
+//        showNoteDetails.putExtra(NoteDetails.ARG_PARAM1, note);
+//        startActivity(showNoteDetails);
+    }
+
+    private void addFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

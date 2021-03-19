@@ -1,13 +1,18 @@
 package ru.geekbrains.notes;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.FrameLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivityNavMenu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private boolean isLandscape;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class MainActivityNavMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                removeLastFragment();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -45,7 +52,41 @@ public class MainActivityNavMenu extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) {
+            addLandFragment(new ListOfNotes(), new NoteDetails());
+        } else {
+            addPortFragment(new ListOfNotes());
+        }
+
+
     }
+
+    private void addPortFragment(Fragment listOfNotes) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, listOfNotes);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
+    }
+
+    private void addLandFragment(Fragment listOfNotes, Fragment noteDetails) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, listOfNotes);
+        fragmentTransaction.add(R.id.detail_fragment_container, noteDetails);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
+
+    }
+
+    private void removeLastFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,4 +101,16 @@ public class MainActivityNavMenu extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        int count = getSupportFragmentManager().getBackStackEntryCount();
+//        if (count == 0) {
+//            super.onBackPressed();
+//
+//        } else {
+//            getSupportFragmentManager().popBackStack();
+//        }
+//
+//    }
 }
