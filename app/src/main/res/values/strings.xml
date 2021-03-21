@@ -13,4 +13,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="menu_favorites">Избранное</string>
+    <string name="menu_change_theme">Сменить тему</string>
+    <string name="menu_about">О приложении</string>
 </resources>

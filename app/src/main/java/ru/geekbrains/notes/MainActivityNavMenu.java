@@ -2,6 +2,8 @@ package ru.geekbrains.notes;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +43,7 @@ public class MainActivityNavMenu extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_about)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -55,6 +57,7 @@ public class MainActivityNavMenu extends AppCompatActivity {
             addPortFragment(new ListOfNotes());
         }
     }
+
 
     private void addPortFragment(Fragment listOfNotes) {
         FragmentManager fragmentManager = getSupportFragmentManager();
