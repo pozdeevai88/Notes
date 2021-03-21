@@ -58,7 +58,6 @@ public class MainActivityNavMenu extends AppCompatActivity {
         }
     }
 
-
     private void addPortFragment(Fragment listOfNotes) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

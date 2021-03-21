@@ -23,5 +23,4 @@
 
     <style name="Theme.Notes.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Style.Dialog" parent="ThemeOverlay.AppCompat.Dialog" />
 </resources>

@@ -17,4 +17,7 @@
     <string name="menu_favorites">Избранное</string>
     <string name="menu_change_theme">Сменить тему</string>
     <string name="menu_about">О приложении</string>
+    <string name="text_developer">Разработчик: Поздеев Алексей</string>
+    <string name="text_support">При поддержке Geekbrains</string>
+    <string name="text_version">Версия 7.4</string>
 </resources>
