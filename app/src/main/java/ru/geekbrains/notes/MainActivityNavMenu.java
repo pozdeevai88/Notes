@@ -82,7 +82,6 @@ public class MainActivityNavMenu extends AppCompatActivity {
         fragmentManager.popBackStack();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -96,4 +95,6 @@ public class MainActivityNavMenu extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }

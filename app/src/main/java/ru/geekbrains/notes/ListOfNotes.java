@@ -69,6 +69,7 @@ public class ListOfNotes extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
     }
 
     private void showNoteDetails(LinkedList<String> note) {
