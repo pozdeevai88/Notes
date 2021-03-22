@@ -2,6 +2,7 @@ package ru.geekbrains.notes;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -9,10 +10,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.LinkedList;
+
 import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
 public class ListOfNotes extends Fragment {
@@ -20,13 +26,13 @@ public class ListOfNotes extends Fragment {
     private static final Notes NOTES = new Notes();
     private boolean isLandscape;
 
-    public ListOfNotes() {
-        // Required empty public constructor
-    }
+//    public ListOfNotes() {
+//        // Required empty public constructor
+//    }
 
-    public static ListOfNotes newInstance() {
-        return new ListOfNotes();
-    }
+//    public static ListOfNotes newInstance() {
+//        return new ListOfNotes();
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,12 +48,17 @@ public class ListOfNotes extends Fragment {
         return view;
     }
 
-    private void initRecyclerView(RecyclerView recyclerView, LinkedList<LinkedList<String>> data){
+    private void initRecyclerView(RecyclerView recyclerView, LinkedList<LinkedList<String>> data) {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         HomeListAdapter adapter = new HomeListAdapter(data);
         recyclerView.setAdapter(adapter);
+        adapter.SetOnItemClickListener((view, position) -> {
+            showNoteDetails(NOTES.getAllNotes().get(position));
+//                Toast.makeText(getContext(), String.format("%s - %d",
+//                        ((TextView) view).getText(), position), Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -57,7 +68,7 @@ public class ListOfNotes extends Fragment {
 
     }
 
-    private void initListOfNotes(View view) {
+//    private void initListOfNotes(View view) {
 //        LinearLayout layoutView = (LinearLayout) view;
 //        NOTES.clear();
 //        NOTES.addNote("First note", "First note description",
@@ -78,7 +89,7 @@ public class ListOfNotes extends Fragment {
 //            final int noteIdx = i;
 //            tv.setOnClickListener(v -> showNoteDetails(allNotes.get(noteIdx)));
 //        }
-    }
+//    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -105,9 +116,8 @@ public class ListOfNotes extends Fragment {
     private void showPortNoteDetails(LinkedList<String> note) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, new NoteDetails(note));
+        fragmentTransaction.replace(R.id.fragment_container, new NoteDetails(note));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 }

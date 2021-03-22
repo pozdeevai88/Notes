@@ -9,7 +9,9 @@ public class Notes {
     private static final LinkedList<LinkedList<String>> allNotes = new LinkedList<>();
 
     public Notes() {
-        allNotes.clear();
+        this.clear();
+        // По нормальому всё должно храниться в базе, а не в ресурсах в виде строк. И не так
+        // Но пока так
         this.addNote("First note", "First note description",
                 "First note large text");
         this.addNote("Second note", "Second note description",
