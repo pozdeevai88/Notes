@@ -26,14 +26,6 @@ public class ListOfNotes extends Fragment {
     private static final Notes NOTES = new Notes();
     private boolean isLandscape;
 
-//    public ListOfNotes() {
-//        // Required empty public constructor
-//    }
-
-//    public static ListOfNotes newInstance() {
-//        return new ListOfNotes();
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,40 +48,13 @@ public class ListOfNotes extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.SetOnItemClickListener((view, position) -> {
             showNoteDetails(NOTES.getAllNotes().get(position));
-//                Toast.makeText(getContext(), String.format("%s - %d",
-//                        ((TextView) view).getText(), position), Toast.LENGTH_SHORT).show();
         });
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        initListOfNotes(view);
-
     }
-
-//    private void initListOfNotes(View view) {
-//        LinearLayout layoutView = (LinearLayout) view;
-//        NOTES.clear();
-//        NOTES.addNote("First note", "First note description",
-//                "First note large text");
-//        NOTES.addNote("Second note", "Second note description",
-//                "Second note large text");
-//        NOTES.addNote("Third note", "Third note description",
-//                "Third note large text");
-//        NOTES.addNote("Fourth note", "Fourth note description",
-//                "Fourth note large text");
-//        LinkedList<LinkedList<String>> allNotes = NOTES.getAllNotes();
-//        for (int i = 0; i < allNotes.size(); i++) {
-//            String noteName = allNotes.get(i).get(1);
-//            TextView tv = new TextView(getContext());
-//            tv.setText(noteName);
-//            tv.setTextSize(30);
-//            layoutView.addView(tv);
-//            final int noteIdx = i;
-//            tv.setOnClickListener(v -> showNoteDetails(allNotes.get(noteIdx)));
-//        }
-//    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

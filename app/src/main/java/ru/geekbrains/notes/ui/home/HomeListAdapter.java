@@ -4,9 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.LinkedList;
+
 import ru.geekbrains.notes.R;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
@@ -27,7 +30,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HomeListAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.getTextView().setText((CharSequence) dataSource.get(i).get(1));
+        viewHolder.setData(dataSource.get(i).get(1));
     }
 
     @Override
@@ -40,7 +43,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView;
+            textView = itemView.findViewById(R.id.textView);
             textView.setOnClickListener(v -> {
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(v, getAdapterPosition());
@@ -48,16 +51,16 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             });
         }
 
-        public TextView getTextView() {
-            return textView;
+        public void setData(String title) {
+            textView.setText(title);
         }
     }
 
-    public void SetOnItemClickListener(OnItemClickListener itemClickListener){
+    public void SetOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view , int position);
+        void onItemClick(View view, int position);
     }
 }
