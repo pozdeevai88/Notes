@@ -1,22 +1,32 @@
 package ru.geekbrains.notes;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import java.util.LinkedList;
+import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
 public class NoteDetails extends Fragment {
 
+    private HomeListAdapter mAdapter;
     private LinkedList<String> mNote;
+    private int idx;
+    private boolean isLandscape;
 
-    public NoteDetails(LinkedList<String> note) {
+    public NoteDetails(LinkedList<String> note, int position, HomeListAdapter adapter) {
         this.mNote = note;
+        this.idx = position;
+        this.mAdapter = adapter;
     }
 
     public NoteDetails() {
@@ -33,7 +43,37 @@ public class NoteDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_details, container, false);
+        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        ExtendedFloatingActionButton fab_edit_note = view.findViewById(R.id.fab_edit_note);
+        fab_edit_note.setOnClickListener(v -> {
+            showNoteEdit(mNote, idx);
+        });
+        return view;
+    }
+
+    private void showNoteEdit(LinkedList<String> mNote, int idx) {
+        if (isLandscape) {
+            showLandNoteEdit(mNote, idx);
+        } else {
+            showPortNoteEdit(mNote, idx);
+        }
+    }
+
+    private void showLandNoteEdit(LinkedList<String> mNote, int idx) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.detail_fragment_container, new EditNote(mNote, idx, mAdapter));
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void showPortNoteEdit(LinkedList<String> mNote, int idx) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, new EditNote(mNote, idx, mAdapter));
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override

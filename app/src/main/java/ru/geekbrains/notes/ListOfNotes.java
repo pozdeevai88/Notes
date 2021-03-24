@@ -35,13 +35,11 @@ public class ListOfNotes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_of_notes, container, false);
         FloatingActionButton fab = view.findViewById(R.id.fab);
-
         fab.setOnClickListener(v -> {
 //            Snackbar.make(view, "Добавление заметок пока недоступно", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
             showNoteAdd();
         });
-
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         initRecyclerView(recyclerView);
         return view;
@@ -81,7 +79,7 @@ public class ListOfNotes extends Fragment {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator,null));
         recyclerView.addItemDecoration(itemDecoration);
-        adapter.SetOnItemClickListener((view, position) -> showNoteDetails(NOTES.getAllNotes().get(position)));
+        adapter.SetOnItemClickListener((view, position) -> showNoteDetails(NOTES.getAllNotes().get(position), position));
     }
 
     @Override
@@ -95,25 +93,25 @@ public class ListOfNotes extends Fragment {
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    private void showNoteDetails(LinkedList<String> note) {
+    private void showNoteDetails(LinkedList<String> note, int position) {
         if (isLandscape) {
-            showLandNoteDetails(note);
+            showLandNoteDetails(note, position);
         } else {
-            showPortNoteDetails(note);
+            showPortNoteDetails(note, position);
         }
     }
 
-    private void showLandNoteDetails(LinkedList<String> note) {
+    private void showLandNoteDetails(LinkedList<String> note, int position) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.detail_fragment_container, new NoteDetails(note));
+        fragmentTransaction.replace(R.id.detail_fragment_container, new NoteDetails(note, position, adapter));
         fragmentTransaction.commit();
     }
 
-    private void showPortNoteDetails(LinkedList<String> note) {
+    private void showPortNoteDetails(LinkedList<String> note, int position) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, new NoteDetails(note));
+        fragmentTransaction.replace(R.id.fragment_container, new NoteDetails(note, position, adapter));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -25,4 +25,6 @@
     <string name="note_about">Описание</string>
     <string name="note_content">Текст заметки</string>
     <string name="save_note">Сохранить</string>
+    <string name="note_edit">Редактирование заметки</string>
+    <string name="edit_note">Редактировать</string>
 </resources>
