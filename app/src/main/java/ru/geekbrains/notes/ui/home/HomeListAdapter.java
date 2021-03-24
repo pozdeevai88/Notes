@@ -4,21 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.LinkedList;
 
+import ru.geekbrains.notes.Notes;
 import ru.geekbrains.notes.R;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
     private LinkedList<LinkedList<String>> dataSource;
     private OnItemClickListener itemClickListener;
+    private Notes notes;
 
-    public HomeListAdapter(LinkedList<LinkedList<String>> dataSource) {
-        this.dataSource = dataSource;
+    public HomeListAdapter(Notes notes) {
+        this.notes = notes;
+        this.dataSource = notes.getAllNotes();
     }
 
     @NonNull
