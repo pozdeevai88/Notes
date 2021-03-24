@@ -24,6 +24,7 @@ public class ListOfNotes extends Fragment {
 
     private static final Notes NOTES = new Notes();
     private boolean isLandscape;
+    private HomeListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,14 +58,15 @@ public class ListOfNotes extends Fragment {
     private void showLandNoteAdd() {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.detail_fragment_container, new AddNote());
+        fragmentTransaction.replace(R.id.detail_fragment_container, new AddNote(adapter));
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
     private void showPortNoteAdd() {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, new AddNote());
+        fragmentTransaction.replace(R.id.fragment_container, new AddNote(adapter));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -74,7 +76,7 @@ public class ListOfNotes extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        HomeListAdapter adapter = new HomeListAdapter(NOTES);
+        adapter = new HomeListAdapter(NOTES);
         recyclerView.setAdapter(adapter);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator,null));
@@ -94,7 +96,6 @@ public class ListOfNotes extends Fragment {
     }
 
     private void showNoteDetails(LinkedList<String> note) {
-
         if (isLandscape) {
             showLandNoteDetails(note);
         } else {

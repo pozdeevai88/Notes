@@ -13,12 +13,10 @@ import ru.geekbrains.notes.R;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
-    private LinkedList<LinkedList<String>> dataSource;
+    private final LinkedList<LinkedList<String>> dataSource;
     private OnItemClickListener itemClickListener;
-    private Notes notes;
 
     public HomeListAdapter(Notes notes) {
-        this.notes = notes;
         this.dataSource = notes.getAllNotes();
     }
 
