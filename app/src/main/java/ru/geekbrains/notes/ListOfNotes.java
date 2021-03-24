@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.LinkedList;
 import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
@@ -30,9 +33,40 @@ public class ListOfNotes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_of_notes, container, false);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+
+        fab.setOnClickListener(v -> {
+//            Snackbar.make(view, "Добавление заметок пока недоступно", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+            showNoteAdd();
+        });
+
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         initRecyclerView(recyclerView);
         return view;
+    }
+
+    private void showNoteAdd() {
+        if (isLandscape) {
+            showLandNoteAdd();
+        } else {
+            showPortNoteAdd();
+        }
+    }
+
+    private void showLandNoteAdd() {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.detail_fragment_container, new AddNote());
+        fragmentTransaction.commit();
+    }
+
+    private void showPortNoteAdd() {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, new AddNote());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -60,6 +94,7 @@ public class ListOfNotes extends Fragment {
     }
 
     private void showNoteDetails(LinkedList<String> note) {
+
         if (isLandscape) {
             showLandNoteDetails(note);
         } else {
