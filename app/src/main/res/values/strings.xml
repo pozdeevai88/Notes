@@ -27,4 +27,5 @@
     <string name="save_note">Сохранить</string>
     <string name="note_edit">Редактирование заметки</string>
     <string name="edit_note">Редактировать</string>
+    <string name="delete">Удалить</string>
 </resources>
