@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".NoteDetails">
+
+    <LinearLayout
+        android:id="@+id/details_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical" />
+
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fab_edit_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
-            android:text="@string/edit_note" />
+            android:text="@string/edit_note"
+            android:visibility="invisible" />
     </FrameLayout>
 
-</LinearLayout>
+
+</FrameLayout>

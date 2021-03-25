@@ -1,6 +1,7 @@
 package ru.geekbrains.notes;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -59,7 +60,7 @@ public class EditNote extends Fragment {
                 Notes.allNotes.remove(idx);
                 Notes.allNotes.add(idx, note);
                 mAdapter.notifyDataSetChanged();
-                fragmentManager.popBackStack();
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) fragmentManager.popBackStack();
                 fragmentManager.popBackStack();
             }
         });

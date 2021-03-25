@@ -46,6 +46,7 @@ public class NoteDetails extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note_details, container, false);
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         ExtendedFloatingActionButton fab_edit_note = view.findViewById(R.id.fab_edit_note);
+        if (mAdapter != null) fab_edit_note.setVisibility(View.VISIBLE);
         fab_edit_note.setOnClickListener(v -> {
             showNoteEdit(mNote, idx);
         });
@@ -83,7 +84,7 @@ public class NoteDetails extends Fragment {
     }
 
     private void initNoteDetails(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
+        LinearLayout layoutView = view.findViewById(R.id.details_container);
         for (int i = 0; i < mNote.size(); i++) {
             TextView tv = new TextView(getContext());
             tv.setText(mNote.get(i));
