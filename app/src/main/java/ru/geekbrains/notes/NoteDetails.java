@@ -9,27 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class NoteDetails extends Fragment {
 
-    public static final String ARG_PARAM1 = "note";
-    private ArrayList<String> mNote;
+    private LinkedList<String> mNote;
 
-    public static NoteDetails newInstance(ArrayList<String> note) {
-        NoteDetails fragment = new NoteDetails();
-        Bundle args = new Bundle();
-        args.putStringArrayList(ARG_PARAM1, note);
-        fragment.setArguments(args);
-        return fragment;
+    public NoteDetails(LinkedList<String> note) {
+        this.mNote = note;
+    }
+
+    public NoteDetails() {
+        LinkedList<String> emptyNote = new LinkedList<>();
+        emptyNote.add("");
+        this.mNote = emptyNote;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mNote = getArguments().getStringArrayList(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -52,6 +50,5 @@ public class NoteDetails extends Fragment {
             tv.setTextSize(30);
             layoutView.addView(tv);
         }
-
     }
 }

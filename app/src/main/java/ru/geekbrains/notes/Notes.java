@@ -24,4 +24,8 @@ public class Notes {
         return allNotes;
     }
 
+    public void clear() {
+        allNotes.clear();
+    }
+
 }
