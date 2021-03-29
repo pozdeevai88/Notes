@@ -27,49 +27,46 @@ import ru.geekbrains.notes.ui.home.HomeListAdapter;
 public class FireBaseData extends Thread {
     private final String TAG = "NOTE_LOG";
     private final FirebaseFirestore db;
-    public static boolean isEOL = false;
 
     public FireBaseData() {
         this.db = FirebaseFirestore.getInstance();
     }
 
     public void readAllNotes() {
-            db.collection("notes")
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                LinkedList<String> n = new LinkedList<>();
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                n.add(document.getString("date"));
-                                n.add(document.getString("noteName"));
-                                n.add(document.getString("noteDescr"));
-                                n.add(document.getString("noteText"));
-                                Notes.allNotes.add(n);
-                                ListOfNotes.adapter.notifyItemInserted(Notes.allNotes.size());
-                            }
-                            FireBaseData.isEOL = true;
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+        db.collection("notes")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            LinkedList<String> n = new LinkedList<>();
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            n.add(document.getString("date"));
+                            n.add(document.getString("noteName"));
+                            n.add(document.getString("noteDescr"));
+                            n.add(document.getString("noteText"));
+                            Notes.allNotes.add(n);
+                            ListOfNotes.adapter.notifyItemInserted(Notes.allNotes.size());
                         }
-                    });
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
     }
 
-    public void addNewNote() {
+    public void addNewNote(LinkedList<String> note) {
         Map<String, Object> newNote = new HashMap<>();
-        newNote.put("first", "Ada");
-        newNote.put("last", "Lovelace");
-        newNote.put("born", 1815);
+        newNote.put("date", note.get(0));
+        newNote.put("noteName", note.get(1));
+        newNote.put("noteDescr", note.get(2));
+        newNote.put("noteText", note.get(3));
 
         db.collection("notes")
                 .add(newNote)
-                .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+                .addOnSuccessListener(documentReference -> {
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    ListOfNotes.adapter.notifyItemInserted(Notes.allNotes.size());
+                })
+                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
     }
 
 }

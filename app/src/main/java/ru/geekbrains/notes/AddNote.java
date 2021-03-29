@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +51,9 @@ public class AddNote extends Fragment {
                 note.add(noteTitle.getText().toString());
                 note.add(noteAbout.getText().toString());
                 note.add(noteContent.getText().toString());
-                Notes.allNotes.add(note);
-                mAdapter.notifyItemInserted(Notes.allNotes.size());
+//                Notes.allNotes.add(note);
+                Notes.addNote(note);
+//                mAdapter.notifyItemInserted(Notes.allNotes.size());
                 fragmentManager.popBackStack();
             }
         });
