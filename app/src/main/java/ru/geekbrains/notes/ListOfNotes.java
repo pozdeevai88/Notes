@@ -29,13 +29,14 @@ import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
 public class ListOfNotes extends Fragment {
 
-    private static final Notes NOTES = new Notes();
+    private static Notes NOTES = new Notes();
     private boolean isLandscape;
-    private HomeListAdapter adapter;
+    public static HomeListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter = new HomeListAdapter(NOTES, this);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class ListOfNotes extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new HomeListAdapter(NOTES, this);
+
         recyclerView.setAdapter(adapter);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator, null));
@@ -100,11 +101,10 @@ public class ListOfNotes extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int position = adapter.getMenuPosition();
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                Notes.allNotes.remove(position);
-                adapter.notifyItemRemoved(position);
-                return true;
+        if (item.getItemId() == R.id.action_delete) {
+            Notes.allNotes.remove(position);
+            adapter.notifyItemRemoved(position);
+            return true;
         }
         return super.onContextItemSelected(item);
     }
