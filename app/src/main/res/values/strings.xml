@@ -8,9 +8,9 @@
     <string name="nav_header_title">GeekBrains</string>
     <string name="nav_header_subtitle">support@geekbrains.ru</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Изменить тему</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Главная</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
@@ -19,7 +19,7 @@
     <string name="menu_about">О приложении</string>
     <string name="text_developer">Разработчик: Поздеев Алексей</string>
     <string name="text_support">При поддержке Geekbrains</string>
-    <string name="text_version">Версия 7.4</string>
+    <string name="text_version">Версия 10.4</string>
     <string name="note_add">Добавление заметки</string>
     <string name="note_title">Заголовок</string>
     <string name="note_about">Описание</string>
