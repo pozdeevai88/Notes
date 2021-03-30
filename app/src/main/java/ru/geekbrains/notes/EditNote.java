@@ -57,9 +57,10 @@ public class EditNote extends Fragment {
                 note.add(noteTitle.getText().toString());
                 note.add(noteAbout.getText().toString());
                 note.add(noteContent.getText().toString());
-                Notes.allNotes.remove(idx);
-                Notes.allNotes.add(idx, note);
-                mAdapter.notifyDataSetChanged();
+//                Notes.allNotes.remove(idx);
+//                Notes.allNotes.add(idx, note);
+                Notes.editNote(idx, note);
+//                mAdapter.notifyDataSetChanged();
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) fragmentManager.popBackStack();
                 fragmentManager.popBackStack();
             }

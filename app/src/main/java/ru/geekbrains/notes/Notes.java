@@ -38,6 +38,12 @@ public class Notes {
         allNotes.remove(position);
     }
 
+    public static void editNote(int idx, LinkedList<String> note) {
+        fireBaseData.editNote(allNotes.get(idx), note);
+        allNotes.remove(idx);
+        allNotes.add(idx, note);
+    }
+
     public LinkedList<LinkedList<String>> getAllNotes() {
         return allNotes;
     }

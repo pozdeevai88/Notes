@@ -39,7 +39,6 @@ public class FireBaseData extends Thread {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             LinkedList<String> n = new LinkedList<>();
-                            Log.d(TAG, document.getId() + " => " + document.getData());
                             n.add(document.getString("date"));
                             n.add(document.getString("noteName"));
                             n.add(document.getString("noteDescr"));
@@ -70,9 +69,8 @@ public class FireBaseData extends Thread {
     }
 
     public void removeNote(LinkedList<String> note, int position) {
-        Log.d(TAG, "Log to deleting = " + note.toString());
-        Log.d(TAG, "Position to deleting = " + position);
         db.collection("notes")
+                .whereEqualTo("date", note.get(0))
                 .whereEqualTo("noteName", note.get(1))
                 .whereEqualTo("noteDescr", note.get(2))
                 .whereEqualTo("noteText", note.get(3))
@@ -81,9 +79,36 @@ public class FireBaseData extends Thread {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             String id = document.getId();
-                            Log.d(TAG, "Deleted id = " + id);
                             db.collection("notes").document(id).delete();
                             ListOfNotes.adapter.notifyItemRemoved(position);
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    public void editNote(LinkedList<String> oldNote, LinkedList<String> newNote) {
+        Map<String, Object> editedNote = new HashMap<>();
+        editedNote.put("date", newNote.get(0));
+        editedNote.put("noteName", newNote.get(1));
+        editedNote.put("noteDescr", newNote.get(2));
+        editedNote.put("noteText", newNote.get(3));
+
+        db.collection("notes")
+                .whereEqualTo("date", oldNote.get(0))
+                .whereEqualTo("noteName", oldNote.get(1))
+                .whereEqualTo("noteDescr", oldNote.get(2))
+                .whereEqualTo("noteText", oldNote.get(3))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            String id = document.getId();
+                            db.collection("notes")
+                                    .document(id)
+                                    .update(editedNote);
+                            ListOfNotes.adapter.notifyDataSetChanged();
                         }
                     } else {
                         Log.w(TAG, "Error getting documents.", task.getException());
