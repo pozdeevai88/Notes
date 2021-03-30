@@ -51,9 +51,7 @@ public class AddNote extends Fragment {
                 note.add(noteTitle.getText().toString());
                 note.add(noteAbout.getText().toString());
                 note.add(noteContent.getText().toString());
-//                Notes.allNotes.add(note);
                 Notes.addNote(note);
-//                mAdapter.notifyItemInserted(Notes.allNotes.size());
                 fragmentManager.popBackStack();
             }
         });

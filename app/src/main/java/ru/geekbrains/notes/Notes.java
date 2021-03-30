@@ -33,12 +33,13 @@ public class Notes {
         fireBaseData.addNewNote(note);
     }
 
-    public LinkedList<LinkedList<String>> getAllNotes() {
-        return allNotes;
+    public static void removeNote(int position) {
+        fireBaseData.removeNote(allNotes.get(position), position);
+        allNotes.remove(position);
     }
 
-    public void clear() {
-        allNotes.clear();
+    public LinkedList<LinkedList<String>> getAllNotes() {
+        return allNotes;
     }
 
 }

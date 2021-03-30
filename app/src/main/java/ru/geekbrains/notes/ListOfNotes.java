@@ -102,8 +102,9 @@ public class ListOfNotes extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int position = adapter.getMenuPosition();
         if (item.getItemId() == R.id.action_delete) {
-            Notes.allNotes.remove(position);
-            adapter.notifyItemRemoved(position);
+//            Notes.allNotes.remove(position);
+            Notes.removeNote(position);
+//            adapter.notifyItemRemoved(position);
             return true;
         }
         return super.onContextItemSelected(item);

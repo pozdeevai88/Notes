@@ -69,4 +69,25 @@ public class FireBaseData extends Thread {
                 .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
     }
 
+    public void removeNote(LinkedList<String> note, int position) {
+        Log.d(TAG, "Log to deleting = " + note.toString());
+        Log.d(TAG, "Position to deleting = " + position);
+        db.collection("notes")
+                .whereEqualTo("noteName", note.get(1))
+                .whereEqualTo("noteDescr", note.get(2))
+                .whereEqualTo("noteText", note.get(3))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            String id = document.getId();
+                            Log.d(TAG, "Deleted id = " + id);
+                            db.collection("notes").document(id).delete();
+                            ListOfNotes.adapter.notifyItemRemoved(position);
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
+    }
 }
