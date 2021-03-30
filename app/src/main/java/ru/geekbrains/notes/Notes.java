@@ -1,15 +1,9 @@
 package ru.geekbrains.notes;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
-import android.widget.Adapter;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
-
-import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
 public class Notes {
     public static LinkedList<LinkedList<String>> allNotes = new LinkedList<>();

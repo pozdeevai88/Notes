@@ -3,7 +3,6 @@ package ru.geekbrains.notes;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,19 +11,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.LinkedList;
-
 import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
 public class ListOfNotes extends Fragment {
@@ -44,8 +38,6 @@ public class ListOfNotes extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_of_notes, container, false);
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
-//            Snackbar.make(view, "Добавление заметок пока недоступно", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
             showNoteAdd();
         });
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
@@ -102,9 +94,7 @@ public class ListOfNotes extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int position = adapter.getMenuPosition();
         if (item.getItemId() == R.id.action_delete) {
-//            Notes.allNotes.remove(position);
             Notes.removeNote(position);
-//            adapter.notifyItemRemoved(position);
             return true;
         }
         return super.onContextItemSelected(item);
