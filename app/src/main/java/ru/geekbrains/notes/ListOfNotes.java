@@ -3,7 +3,6 @@ package ru.geekbrains.notes;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,30 +11,26 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.LinkedList;
-
 import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
 public class ListOfNotes extends Fragment {
 
-    private static final Notes NOTES = new Notes();
+    private static Notes NOTES = new Notes();
     private boolean isLandscape;
-    private HomeListAdapter adapter;
+    public static HomeListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter = new HomeListAdapter(NOTES, this);
     }
 
     @Override
@@ -43,8 +38,6 @@ public class ListOfNotes extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_of_notes, container, false);
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
-//            Snackbar.make(view, "Добавление заметок пока недоступно", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
             showNoteAdd();
         });
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
@@ -81,7 +74,7 @@ public class ListOfNotes extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new HomeListAdapter(NOTES, this);
+
         recyclerView.setAdapter(adapter);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator, null));
@@ -100,11 +93,9 @@ public class ListOfNotes extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int position = adapter.getMenuPosition();
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                Notes.allNotes.remove(position);
-                adapter.notifyItemRemoved(position);
-                return true;
+        if (item.getItemId() == R.id.action_delete) {
+            Notes.removeNote(position);
+            return true;
         }
         return super.onContextItemSelected(item);
     }

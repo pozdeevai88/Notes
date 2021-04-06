@@ -1,5 +1,6 @@
 package ru.geekbrains.notes;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -83,12 +84,34 @@ public class NoteDetails extends Fragment {
         initNoteDetails(view);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initNoteDetails(View view) {
         LinearLayout layoutView = view.findViewById(R.id.details_container);
         for (int i = 0; i < mNote.size(); i++) {
             TextView tv = new TextView(getContext());
-            tv.setText(mNote.get(i));
-            tv.setTextSize(30);
+            tv.setPadding(20,10,0,0);
+            if (i == 0) {
+                tv.setTextSize(22);
+                tv.setText("Создано " + mNote.get(i));
+            }
+            if (i == 1) {
+                tv.setTextSize(22);
+                tv.setText("Название: " + mNote.get(i));
+            }
+            if (i == 2) {
+                tv.setTextSize(22);
+                tv.setText("Описание: " + mNote.get(i));
+            }
+            if (i == 3) {
+                tv.setTextSize(20);
+                tv.setText("Текст заметки:");
+                tv.setPadding(20,60,0,0);
+                layoutView.addView(tv);
+                tv = new TextView(getContext());
+                tv.setTextSize(30);
+                tv.setText(mNote.get(i));
+                tv.setPadding(20,10,0,0);
+            }
             layoutView.addView(tv);
         }
     }

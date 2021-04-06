@@ -3,13 +3,11 @@ package ru.geekbrains.notes.ui.home;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.LinkedList;
-
 import ru.geekbrains.notes.Notes;
 import ru.geekbrains.notes.R;
 
