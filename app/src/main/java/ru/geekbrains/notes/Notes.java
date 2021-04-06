@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 public class Notes {
-    private static final LinkedList<LinkedList<String>> allNotes = new LinkedList<>();
+    public static final LinkedList<LinkedList<String>> allNotes = new LinkedList<>();
 
     public Notes() {
         this.clear();

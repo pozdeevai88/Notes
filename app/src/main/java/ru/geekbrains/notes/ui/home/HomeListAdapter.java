@@ -3,8 +3,10 @@ package ru.geekbrains.notes.ui.home;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.LinkedList;
 
@@ -13,13 +15,19 @@ import ru.geekbrains.notes.R;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
-    private LinkedList<LinkedList<String>> dataSource;
+    private final LinkedList<LinkedList<String>> dataSource;
+    private final Fragment fragment;
     private OnItemClickListener itemClickListener;
-    private Notes notes;
 
-    public HomeListAdapter(Notes notes) {
-        this.notes = notes;
+    private int menuPosition;
+
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
+    public HomeListAdapter(Notes notes, Fragment fragment) {
         this.dataSource = notes.getAllNotes();
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -44,12 +52,23 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            registerContextMenu(itemView);
             textView = itemView.findViewById(R.id.textView);
             textView.setOnClickListener(v -> {
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(v, getAdapterPosition());
                 }
             });
+            textView.setOnLongClickListener(v -> {
+                menuPosition = getLayoutPosition();
+                return false;
+            });
+
+        }
+        private void registerContextMenu(@NonNull View itemView) {
+            if (fragment != null){
+                fragment.registerForContextMenu(itemView);
+            }
         }
 
         public void setData(String title) {

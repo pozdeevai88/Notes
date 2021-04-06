@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".AddNote">
+    tools:context=".EditNote">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/note_add" />
+            android:text="@string/note_edit" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/note_add_title"
@@ -48,6 +48,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/save_note"/>
-<!--        app:srcCompat="@drawable/add_note_icon"-->
 
 </FrameLayout>

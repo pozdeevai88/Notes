@@ -1,6 +1,7 @@
 package ru.geekbrains.notes;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,10 +16,14 @@ import java.util.Date;
 import java.util.LinkedList;
 import ru.geekbrains.notes.ui.home.HomeListAdapter;
 
-public class AddNote extends Fragment {
+public class EditNote extends Fragment {
     private HomeListAdapter mAdapter;
+    private LinkedList<String> mNote;
+    private int idx;
 
-    public AddNote(HomeListAdapter adapter) {
+    public EditNote(LinkedList<String> note, int idx, HomeListAdapter adapter) {
+        this.mNote = note;
+        this.idx = idx;
         this.mAdapter = adapter;
     }
 
@@ -30,11 +35,14 @@ public class AddNote extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_note, container, false);
         ExtendedFloatingActionButton fab_save_note = view.findViewById(R.id.fab_save_note);
         EditText noteTitle = view.findViewById(R.id.note_add_title);
         EditText noteAbout = view.findViewById(R.id.note_add_about);
         EditText noteContent = view.findViewById(R.id.note_add_content);
+        noteTitle.setHint(mNote.get(1));
+        noteAbout.setHint(mNote.get(2));
+        noteContent.setHint(mNote.get(3));
         fab_save_note.setOnClickListener(v -> {
             if (TextUtils.isEmpty(noteTitle.getText())) {
                 noteTitle.setError("Заполните заголовок");
@@ -49,8 +57,10 @@ public class AddNote extends Fragment {
                 note.add(noteTitle.getText().toString());
                 note.add(noteAbout.getText().toString());
                 note.add(noteContent.getText().toString());
-                Notes.allNotes.add(note);
-                mAdapter.notifyItemInserted(Notes.allNotes.size());
+                Notes.allNotes.remove(idx);
+                Notes.allNotes.add(idx, note);
+                mAdapter.notifyDataSetChanged();
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) fragmentManager.popBackStack();
                 fragmentManager.popBackStack();
             }
         });
